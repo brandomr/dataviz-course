@@ -1,0 +1,54 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Within HTML, this is what a comment looks like-->
+    <!--Change the title to something appropriate for your project-->
+    <title>Template Title</title>
+
+    <!--Here we load the Foundation stylesheet and javascript; no need to change this. Note that the "../" in the href indicates 
+    that the folder 'foundation' is found in the current folder's parent directory--> 
+    <link rel="stylesheet" href="../foundation/css/foundation.css" />
+    <script src="../foundation/js/vendor/modernizr.js"></script>
+  </head>
+  
+<!--The style section allows you to apply specific styling to html elements within the page--> 
+<style>
+/* within CSS, this is what a comment looks like */
+</style>
+
+
+<!--Here is the primary HTML for this page-->
+  <body>
+    
+  <!--This relies on two outer containers from the Foundation package, the "row" and the "large-12 columns" divs-->
+    <div class="row">
+      <div class="large-12 columns">
+        
+        <!--Insert a header of your choosing-->
+        <h1>Template Header</h1>
+        
+        <!--Insert explanatory text of your choosing as well-->
+        <p>This is a pagragraph element. Here is a place you can put any explanatory information you would like.</p>
+       
+      <!--This is the "div" element to use for the chart-->
+       <div id="chart"></div>
+        
+      </div><!--Close the "large-12 columns" div-->
+    </div><!--Close the "row" div-->
+ </body>
+        
+
+    <!--Load the rest of the Foundation scripts-->
+    <script src="../foundation/js/vendor/jquery.js"></script>
+    <script src="../foundation/js/foundation.min.js"></script>
+    
+    <!--Call the Foundation script-->
+    <script>
+      $(document).foundation();
+    </script>
+
+  </body>
+</html>
