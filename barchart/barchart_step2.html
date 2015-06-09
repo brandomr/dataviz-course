@@ -1,0 +1,227 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Within HTML, this is what a comment looks like-->
+    <!--Change the title to something appropriate for your project-->
+    <title>Higher Education by State</title>
+
+    <!--Here we load the Foundation stylesheet and javascript; no need to change this. Note that the "../" in the href indicates 
+    that the folder 'foundation' is found in the current folder's parent directory--> 
+    <link rel="stylesheet" href="../foundation/css/foundation.css" />
+    <script src="../foundation/js/vendor/modernizr.js"></script>
+  </head>
+  
+<!--The style section allows you to apply specific styling to html elements within the page--> 
+<style>
+/* within CSS, this is what a comment looks like */
+
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+  fill-opacity: .9;
+}
+
+.x.axis path {
+  display: none;
+}
+
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+</style>
+
+
+<!--Here is the primary HTML for this page-->
+  <body>
+    
+  <!--This relies on two outer containers from the Foundation package, the "row" and the "large-12 columns" divs-->
+    <div class="row">
+      <div class="large-12 columns">
+        
+        <!--Insert a header of your choosing-->
+        <h1>Template Header</h1>
+        
+        <!--Insert explanatory text of your choosing as well-->
+        <p>This is a pagragraph element. Here is a place you can put any explanatory information you would like.</p>
+       
+      <!--This is the "div" element to use for the chart-->
+       <div id="chart">
+       <label><input type="checkbox"> Sort values</label>
+       </div>
+        
+      </div><!--Close the "large-12 columns" div-->
+    </div><!--Close the "row" div-->
+ </body>
+        
+
+<script src="../d3/d3.min.js"></script>
+<script src="../d3-tip/index.js"></script>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// var formatPercent = d3.format(".0%");
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1, 1);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+ //   .tickFormat(formatPercent);
+
+
+// call the tooltip
+ var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Frequency:</strong> <span style='color:red'>" + d.per_capita + "</span>";
+  })
+
+
+
+var svg = d3.select("#chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// make sure to change from tsv to csv!
+d3.csv("educ_data.csv", function(error, data) {
+
+  data.forEach(function(d) {
+    d.per_capita = +d.per_capita;
+    d.abbr = d.abbr;
+  });
+
+  console.log(data);
+
+  x.domain(data.map(function(d) { return d.abbr; }));
+  y.domain([0, d3.max(data, function(d) { return d.per_capita; })]);
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("per_capita");
+
+  svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.abbr); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.per_capita); })
+      .attr("height", function(d) { return height - y(d.per_capita); })
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
+
+  d3.select("input").on("change", change);
+
+  var sortTimeout = setTimeout(function() {
+    d3.select("input").property("checked", true).each(change);
+  }, 2000);
+
+  function change() {
+    clearTimeout(sortTimeout);
+
+    // Copy-on-write since tweens are evaluated after a delay.
+    var x0 = x.domain(data.sort(this.checked
+        ? function(a, b) { return b.per_capita - a.per_capita; }
+        : function(a, b) { return d3.ascending(a.abbr, b.abbr); })
+        .map(function(d) { return d.abbr; }))
+        .copy();
+
+    svg.selectAll(".bar")
+        .sort(function(a, b) { return x0(a.abbr) - x0(b.abbr); });
+
+    var transition = svg.transition().duration(750),
+        delay = function(d, i) { return i * 50; };
+
+    transition.selectAll(".bar")
+        .delay(delay)
+        .attr("x", function(d) { return x0(d.abbr); });
+
+    transition.select(".x.axis")
+        .call(xAxis)
+      .selectAll("g")
+        .delay(delay);
+  }
+});
+
+</script>
+
+
+
+
+    <!--Load the rest of the Foundation scripts-->
+    <script src="../foundation/js/vendor/jquery.js"></script>
+    <script src="../foundation/js/foundation.min.js"></script>
+    
+    <!--Call the Foundation script-->
+    <script>
+      $(document).foundation();
+    </script>
+
+
+</html>
