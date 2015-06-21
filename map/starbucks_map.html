@@ -82,7 +82,7 @@ $(document).ready(function() {
   console.log('map is set up!')
 
   //get_results(bounds);
-  $.getJSON("data.json", function(input_data,error) {
+d3.csv("data.csv", function(error, data) { 
 
         console.log('within callback...')
         data = input_data
@@ -93,8 +93,8 @@ $(document).ready(function() {
 
         // loop through data and place markers on the map
         for(var i=0; i<data.length;i++){
-          L.marker([data[i][23], data[i][24]]).addTo(map)
-          .bindPopup(data[i][15])
+          L.marker([data[i]['Latitude'], data[i]['Longitute']]).addTo(map)
+          .bindPopup(data[i]['Name'])
           .openPopup();
       };
   });
