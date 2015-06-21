@@ -1,0 +1,102 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Within HTML, this is what a comment looks like-->
+    <!--Change the title to something appropriate for your project-->
+    <title>Template Title</title>
+
+    <!--Here we load the Foundation stylesheet and javascript; no need to change this. Note that the "../" in the href indicates 
+    that the folder 'foundation' is found in the current folder's parent directory--> 
+    <link rel="stylesheet" href="../foundation/css/foundation.css" />
+    <script src="../foundation/js/vendor/modernizr.js"></script>
+  </head>
+  
+<!--The style section allows you to apply specific styling to html elements within the page--> 
+<style>
+/* within CSS, this is what a comment looks like */
+</style>
+
+
+<!--Here is the primary HTML for this page-->
+  <body>
+    
+  <!--This relies on two outer containers from the Foundation package, the "row" and the "large-12 columns" divs-->
+    <div class="row">
+      <div class="large-12 columns">
+        
+        <!--Insert a header of your choosing-->
+        <h1>Template Header</h1>
+        
+        <!--Insert explanatory text of your choosing as well-->
+        <p>This is a pagragraph element. Here is a place you can put any explanatory information you would like.</p>
+       
+      <!--This is the "div" element to use for the chart-->
+       <div id="chart"></div>
+        
+      </div><!--Close the "large-12 columns" div-->
+    </div><!--Close the "row" div-->
+ </body>
+        
+
+    <!--Load the rest of the Foundation scripts-->
+    <script src="../foundation/js/vendor/jquery.js"></script>
+    <script src="../foundation/js/foundation.min.js"></script>
+
+    <!--Call the Foundation script-->
+    <script>
+      $(document).foundation();
+    </script>
+
+  
+  <script src="../leaflet-0.7.3/leaflet.js"></script>
+  <script src="../jquery-2.1.4.min.js"></script>
+
+    <script>
+
+
+// Load OpenLayers library and create map
+    
+$(document).ready(function() {
+  $('#content').addClass('map-content');
+  SetMinBlockHeightMap($('.fullscreenmap'));
+  
+  var baseLayer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/cwhong.map-hziyh867/{z}/{x}/{y}.png',{
+    maxZoom: 18
+    });
+  //setup map and add layers
+  var center = [39.2833,-76.6167];
+  var map = new L.Map('full-map', {
+  center: new L.LatLng(39.2833, -76.6167),
+  zoom: 4,
+  layers: [baseLayer]
+  });
+
+  //get_results(bounds);
+  $.getJSON("data.json", function(data) {
+
+        var data = JSON.parse(data)
+        var data = data['data']
+        console.log(data[0])
+
+        // loop through data and place markers on the map
+        for(var i=0; i<data.length;i++){
+          L.marker([data[i][23], data[i][24]]).addTo(map)
+          map.bindPopup(data[i][15])
+          map.openPopup();
+      };
+  })
+  
+
+    </script>
+
+
+
+
+
+
+
+  </body>
+</html>
