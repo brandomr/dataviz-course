@@ -90,7 +90,7 @@ d3.csv("data.csv", function(error, data) {
 
         // loop through data and place markers on the map
         for(var i=0; i<data.length;i++){
-          L.marker([data[i]['Latitude'], data[i]['Longitute']]).addTo(map)
+          L.marker([data[i]['Latitude'], data[i]['Longitude']]).addTo(map)
           .bindPopup(data[i]['Name'])
           .openPopup();
       };
