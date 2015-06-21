@@ -11,7 +11,12 @@
     <!--Here we load the Foundation stylesheet and javascript; no need to change this. Note that the "../" in the href indicates 
     that the folder 'foundation' is found in the current folder's parent directory--> 
     <link rel="stylesheet" href="../foundation/css/foundation.css" />
+     <link rel="stylesheet" href="../leaflet-0.7.3/leaflet.css" />
     <script src="../foundation/js/vendor/modernizr.js"></script>
+
+    <style>
+#chart { height: 500px; }
+    </style>
   </head>
   
 <!--The style section allows you to apply specific styling to html elements within the page--> 
@@ -50,8 +55,11 @@
       $(document).foundation();
     </script>
 
+
+
   
   <script src="../leaflet-0.7.3/leaflet.js"></script>
+
   <script src="../jquery-2.1.4.min.js"></script>
 
     <script>
@@ -60,14 +68,13 @@
 // Load OpenLayers library and create map
     
 $(document).ready(function() {
-  $('#chart').addClass('map-content');
   
   var baseLayer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/cwhong.map-hziyh867/{z}/{x}/{y}.png',{
     maxZoom: 18
     });
   //setup map and add layers
   var center = [39.2833,-76.6167];
-  var map = new L.Map('full-map', {
+  var map = new L.Map('chart', {
   center: new L.LatLng(39.2833, -76.6167),
   zoom: 4,
   layers: [baseLayer]
