@@ -85,7 +85,7 @@ $(document).ready(function() {
   $.getJSON("data.json", function(input_data,error) {
 
         console.log('within callback...')
-        data = JSON.parse(input_data)
+        data = input_data
         console.log(data);
 
         var data = data['data']
