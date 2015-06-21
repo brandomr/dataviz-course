@@ -79,9 +79,12 @@ $(document).ready(function() {
   layers: [baseLayer]
   });
 
-  //get_results(bounds);
-  $.getJSON("data.json", function(data) {
+  console.log('map is set up!')
 
+  //get_results(bounds);
+  $.getJSON("data.json", function(data,error) {
+
+        console.log('within callback...')
         var data = JSON.parse(data)
         console.log(data);
 
