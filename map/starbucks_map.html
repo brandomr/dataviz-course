@@ -94,8 +94,8 @@ $(document).ready(function() {
         // loop through data and place markers on the map
         for(var i=0; i<data.length;i++){
           L.marker([data[i][23], data[i][24]]).addTo(map)
-          map.bindPopup(data[i][15])
-          map.openPopup();
+          .bindPopup(data[i][15])
+          .openPopup();
       };
   });
 
