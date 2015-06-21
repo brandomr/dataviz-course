@@ -60,8 +60,7 @@
 // Load OpenLayers library and create map
     
 $(document).ready(function() {
-  $('#content').addClass('map-content');
-  SetMinBlockHeightMap($('.fullscreenmap'));
+  $('#chart').addClass('map-content');
   
   var baseLayer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/cwhong.map-hziyh867/{z}/{x}/{y}.png',{
     maxZoom: 18
