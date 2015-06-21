@@ -82,10 +82,10 @@ $(document).ready(function() {
   console.log('map is set up!')
 
   //get_results(bounds);
-  $.getJSON("data.json", function(data,error) {
+  $.getJSON("data.json", function(input_data,error) {
 
         console.log('within callback...')
-        data = JSON.parse(data)
+        data = JSON.parse(input_data)
         console.log(data);
 
         var data = data['data']
