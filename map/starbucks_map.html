@@ -72,7 +72,7 @@ $(document).ready(function() {
     maxZoom: 18
     });
   //setup map and add layers
-  var center = [38.0,-77.0];
+  var center = [38.0,-78.0];
   var map = new L.Map('chart', {
   center: new L.LatLng(center[0],center[1]),
   zoom: 12,
@@ -92,8 +92,7 @@ d3.csv("data.csv", function(error, data) {
         for(var i=0; i<data.length;i++){
           L.marker([data[i]['Latitude'], data[i]['Longitude']]).addTo(map)
           .bindPopup('<b>Name</b>: ' + data[i]['Name'] + '<br><b>Type</b>: ' + data[i]['Type'] + 
-            '<br><b>Features</b>: ' + data[i]['Features - Service'] + '<br><b>Location</b>: '+ data[i]['Location'])
-          .openPopup();
+            '<br><b>Features</b>: ' + data[i]['Features - Service'] + '<br><b>Location</b>: '+ data[i]['Location']);
       };
   });
 
