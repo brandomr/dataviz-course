@@ -32,10 +32,10 @@
       <div class="large-12 columns">
         
         <!--Insert a header of your choosing-->
-        <h1>Template Header</h1>
+        <h1>Starbucks of DC</h1>
         
         <!--Insert explanatory text of your choosing as well-->
-        <p>This is a pagragraph element. Here is a place you can put any explanatory information you would like.</p>
+        <p>Here is a map of all the Starbucks located in DC, taken from data available at <a href="https://opendata.socrata.com/Business/All-Starbucks-Locations-in-the-US-Map/ddym-zvjk">OpenData</a>.</p>
        
       <!--This is the "div" element to use for the chart-->
        <div id="chart"></div>
@@ -72,7 +72,7 @@ $(document).ready(function() {
     maxZoom: 18
     });
   //setup map and add layers
-  var center = [38.9,77.0];
+  var center = [37.9,77.0];
   var map = new L.Map('chart', {
   center: new L.LatLng(center[0],center[1]),
   zoom: 9,
