@@ -72,10 +72,10 @@ $(document).ready(function() {
     maxZoom: 18
     });
   //setup map and add layers
-  var center = [39.2833,-76.6167];
+  var center = [39.9,77.0];
   var map = new L.Map('chart', {
-  center: new L.LatLng(39.2833, -76.6167),
-  zoom: 4,
+  center: new L.LatLng(center),
+  zoom: 7,
   layers: [baseLayer]
   });
 
