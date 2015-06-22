@@ -14,7 +14,7 @@
     <script src="../foundation/js/vendor/modernizr.js"></script>
 
     <style>
-      #chart { height: 500px; }
+      #chart { height: 750px; }
     </style>
   </head>
   
@@ -72,7 +72,7 @@ $(document).ready(function() {
     maxZoom: 18
     });
   //setup map and add layers
-  var center = [38.9,-77.0];
+  var center = [38.0,-77.0];
   var map = new L.Map('chart', {
   center: new L.LatLng(center[0],center[1]),
   zoom: 12,
@@ -91,8 +91,8 @@ d3.csv("data.csv", function(error, data) {
         // loop through data and place markers on the map
         for(var i=0; i<data.length;i++){
           L.marker([data[i]['Latitude'], data[i]['Longitude']]).addTo(map)
-          .bindPopup('Name: ' + data[i]['Name'] + '<br>Type: ' + data[i]['Type'] + '<br>Features: ' + data[i]['Features - Service'] + 
-                      '<br>Address: '+ data[i]['Location'])
+          .bindPopup('<b>Name</b>: ' + data[i]['Name'] + '<br><b>Type</b>: ' + data[i]['Type'] + 
+            '<br><b>Features</b>: ' + data[i]['Features - Service'] + '<br><b>Location</b>: '+ data[i]['Location'])
           .openPopup();
       };
   });
