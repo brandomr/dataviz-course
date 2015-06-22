@@ -74,7 +74,7 @@ $(document).ready(function() {
   //setup map and add layers
   var center = [39.9,77.0];
   var map = new L.Map('chart', {
-  center: new L.LatLng(center),
+  center: new L.LatLng(center[0],center[1]),
   zoom: 7,
   layers: [baseLayer]
   });
